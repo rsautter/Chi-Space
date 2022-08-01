@@ -2,22 +2,22 @@ import numpy as np
 from scipy.signal import welch
 
 def spectralEntropy(data, method='fft',start=0,end=None,**kwargs):
- '''
+	'''
 	Wrote by: Rubens A. Sautter (05/2021)
-    	========================================================================
+	========================================================================
 	Measures the spectral entropy 'data', in range frequency between 'start' and 'end', with a given method
 	
 	=========================================================================
-    	Input:
-    	data - a time series (np.array) - len(data) must be greater than 7
-     	method - string with the spectrum measure technique ('fft' or 'welch')
-    	start - index of the minimum spectrum frequency to measure the entropy (must be lesser than len(data) ) 
-    	end - index of the maximum spectrum frequency to measure the entropy (must be greater than 0 and less than len(data)+1)
-    	**kwargs - extra arguments which will be passes to fft or welch methods
-    	
+	Input:
+	data - a time series (np.array) - len(data) must be greater than 7
+	method - string with the spectrum measure technique ('fft' or 'welch')
+	start - index of the minimum spectrum frequency to measure the entropy (must be lesser than len(data) ) 
+	end - index of the maximum spectrum frequency to measure the entropy (must be greater than 0 and less than len(data)+1)
+	**kwargs - extra arguments which will be passes to fft or welch methods
+	
 	=========================================================================
 	Output:
-  	h - Spectral entorpy (value between 0 and 1)
+	h - Spectral entorpy (value between 0 and 1)
 	=========================================================================
 	'''
 	n = len(data)
