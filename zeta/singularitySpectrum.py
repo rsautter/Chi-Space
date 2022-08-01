@@ -89,7 +89,7 @@ def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs 
 	shape = (nSeries,nqs)
 	alphas,falphas,signSum,metrics = np.zeros(shape),np.zeros(shape),np.zeros(nSeries),np.zeros(nSeries)
 	for it  in prange(len(qs)):
-		qrange = qs[it]
+		qrange = 2**qs[it]
 		q = np.linspace(-qrange,qrange,nqs)
 		q = q[q != 0.0]
 		scales = selectScales(timeSeries,threshold=scThresh,nScales=nScales)
