@@ -1,5 +1,5 @@
-from spectralEntropy import *
-from singularitySpectrum import *
+from .spectralEntropy import *
+from .singularitySpectrum import *
 import numpy as np
 
 def zetaSpace(data,qs=np.array([5,6,7,8,9])):
