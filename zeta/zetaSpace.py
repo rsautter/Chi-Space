@@ -1,6 +1,7 @@
-import .spectralEntropy
+from spectralEntropy import *
+from singularitySpectrum import *
 import numpy as np
-import .singularitySpectrum
+
 
 def zetaSpace(data,qs=np.array([5,6,7,8,9])):
 	a, fa, _, _, _ = autoMDFDA(data,qs=qs)
