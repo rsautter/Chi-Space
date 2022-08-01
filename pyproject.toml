@@ -1,0 +1,4 @@
+[build-system]
+name="Zeta-Space"
+version = "0.0.1"
+requires = ["setuptools","wheel","numba","scipy","numpy"]
