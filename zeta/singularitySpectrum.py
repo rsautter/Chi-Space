@@ -1,7 +1,7 @@
 from MFDFA import singspect
 from MFDFA import  MFDFA
 import numpy as np
-import numba
+#import numba
 from numba import jit, prange
 from scipy.optimize import curve_fit
 
@@ -59,7 +59,7 @@ def selectScales(timeSeries,threshold=1e-4,nScales=10):
 def quadratic(x,a,b,c):
     return a*(x**2)+b*(x)+c
 
-@jit(forceobj=True,parallel=True)
+#@jit(forceobj=True,parallel=True)
 def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs = 14):
 	'''
 	Wrote by: Rubens A. Sautter (02/2022)
@@ -99,6 +99,7 @@ def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs 
 		if np.isnan(alpha).any() or np.isnan(falpha).any():
 			continue
 		sol,_ = curve_fit(quadratic,alpha,falpha)
+		print(sol)
 		if sol[0]> 0.0:
 			lmin,lmax = np.min(falpha),np.max(falpha)
 			falpha = -falpha+lmax+lmin
