@@ -98,14 +98,15 @@ def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs 
 		alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
 		if np.isnan(alpha).any() or np.isnan(falpha).any():
 			continue
-		sol,_ = curve_fit(quadratic,alpha.copy(),falpha.copy())
+		sol,_ = curve_fit(quadratic,alpha,falpha.)
 		print(sol)
 		if sol[0]> 0.0:
 			lmin,lmax = np.min(falpha),np.max(falpha)
 			falpha = -falpha+lmax+lmin
-		print(alpha)
-		if (alpha<0.0).any():
-			continue
+		print("a",alpha)
+		alpha = np.abs(alpha)
+		#if (alpha<0.0).any():
+		#	continue
 		print("Saving")
 		index = it
 		metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']
