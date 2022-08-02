@@ -2,11 +2,10 @@
 
 Implementation of the zeta-space for time-series ( $S_H$ x $\Delta \alpha$ ).
 
-Some examples are shown [here](https://github.com/rsautter/Zeta-Space/examples)
+Some examples are shown [here](https://github.com/rsautter/Zeta-Space/tree/main/examples)
 
 ### Installing on colab:
-<pre><code>
-!pip install MFDFA=0.4.1
+<pre><code>!pip install MFDFA==0.4.1
 !pip install git+https://github.com/rsautter/Zeta-Space/
 </code></pre>
 
