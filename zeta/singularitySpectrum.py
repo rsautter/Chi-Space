@@ -105,6 +105,7 @@ def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs 
 			falpha = -falpha+lmax+lmin
 		if (alpha<0.0).any():
 			continue
+		print("Saving")
 		index = it
 		metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']
 		alphas[index] = alpha
