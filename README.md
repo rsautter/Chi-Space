@@ -6,7 +6,7 @@ Some examples are shown [here](https://github.com/rsautter/Zeta-Space/examples)
 
 ### Installing on colab:
 <pre><code>
-!pip install MFDFA
+!pip install MFDFA=0.4.1
 !pip install git+https://github.com/rsautter/Zeta-Space/
 </code></pre>
 
