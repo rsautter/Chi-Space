@@ -49,7 +49,7 @@ def selectScales(timeSeries,threshold=1e-4,nScales=10):
 	psd = np.real(psd*np.conj(psd))
 	maxPSD = np.max(psd)
 	psd = psd/maxPSD
-	scales = np.abs(1/freq[psd >1e-4])
+	scales = np.abs(1/freq[(psd >1e-4) & (freq>1e-20)])
 	scales = scales.astype(np.int)
 	scales = np.unique(scales)
 	np.random.shuffle(scales)
