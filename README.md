@@ -14,7 +14,7 @@ Some examples are shown [here](https://github.com/rsautter/Zeta-Space/examples)
  - Numpy
  - Scipy
  - Numba
- - MFDFA
+ - MFDFA==0.4.1
 
 ## References:
 
