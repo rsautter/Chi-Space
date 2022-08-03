@@ -60,7 +60,7 @@ def quadratic(x,a,b,c):
     return a*(x**2)+b*(x)+c
 
 #@jit(forceobj=True,parallel=True)
-def autoMDFDA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs = 14):
+def autoMFDFA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs = 14):
 	'''
 	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
