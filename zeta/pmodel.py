@@ -73,8 +73,8 @@ def fractal_spectrum_1d(noValues, slope):
 # Endo-Exo generators:
 
 def generateUniformExo(N=4096):
-  # 0.675 < p < 0.975 , 0.65 < beta < 0.75
-  p = (0.975-0.675)*np.random.rand()+0.675
+  # 0.675 < p < 0.85 , 0.65 < beta < 0.75
+  p = (0.85-0.675)*np.random.rand()+0.675
   beta = (0.75-0.65)*np.random.rand()+0.65
   #print(p,beta)
   x, _ = pmodel (N, p, beta)
