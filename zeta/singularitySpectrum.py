@@ -21,11 +21,12 @@ def singularitySpectrumMetrics(alpha,falpha):
 	'''
 	maxFa = np.argmax(falpha)
 	delta = np.max(alpha)-np.min(alpha)
+	assym = np.inf if np.abs(falpha[0]-falpha[len(falpha)-1])<1e-15 else np.abs(falpha[0]-falpha[len(falpha)-1])
     
 	return {'delta_alpha':delta,
 		'max_f':falpha[maxFa],
 		'delta_f': (np.max(falpha)-np.min(falpha)),
-		'asymmetry': np.abs(falpha[0]-falpha[len(falpha)-1])
+		'asymmetry': assym
 		}
 
 def selectScales(timeSeries,threshold=1e-4,nScales=10):
