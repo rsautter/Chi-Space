@@ -93,11 +93,11 @@ def autoMFDFA(timeSeries,qs=np.arange(2,15),nScales=500, scThresh=1e-3, nTurns=3
 	shape = (nSeries,nqs)
 	alphas,falphas,signSum,metrics = np.zeros(shape),np.zeros(shape),np.zeros(nSeries),np.full(nSeries,np.inf)
 	for turn in range(nTurns):
+		scales = selectScales(timeSeries,threshold=scThresh,nScales=nScales)
 		for it  in prange(len(qs)):
 			qrange = qs[it]
 			q = np.linspace(-qrange,qrange,nqs)
 			q = q[q != 0.0]
-			scales = selectScales(timeSeries,threshold=scThresh,nScales=nScales)
 			
 			lag,dfa = MFDFA(timeSeries, scales, q=q)
 			alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
