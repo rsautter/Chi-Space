@@ -1,6 +1,12 @@
 import numpy as np
 from scipy.signal import welch
 
+def getPSD(data):
+	psd = np.fft.fft(data)
+	psd = np.real(psd*np.conj(psd))
+	freq = np.fft.fftfreq(len(data))
+	return freq, psd
+
 def spectralEntropy(data, method='fft',start=0,end=None,**kwargs):
 	'''
 	Wrote by: Rubens A. Sautter (05/2021)
