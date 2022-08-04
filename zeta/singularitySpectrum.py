@@ -91,7 +91,7 @@ def autoMFDFA(timeSeries,qs=np.array([5,6,7,8,9]), scThresh=1e-4,nScales=50,nqs 
 	'''
 	nSeries = len(qs)
 	shape = (nSeries,nqs)
-	alphas,falphas,signSum,metrics = np.zeros(shape),np.zeros(shape),np.zeros(nSeries),np.zeros(nSeries)
+	alphas,falphas,signSum,metrics = np.zeros(shape),np.zeros(shape),np.zeros(nSeries),np.full(nSeries,np.inf)
 	for it  in prange(len(qs)):
 		qrange = qs[it]
 		q = np.linspace(-qrange,qrange,nqs)
