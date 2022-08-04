@@ -53,13 +53,10 @@ def selectScales(timeSeries,threshold=1e-4,nScales=10):
 	freq = freq[pos]
 	maxPSD = np.max(psd)
 	psd = psd/maxPSD
-	scales = np.abs(1/freq[np.argsort(psd)])
-	
-	#scales = np.abs(1/freq[(psd >threshold)])
-	#scales = scales.astype(np.int)
-	#scales = np.unique(scales)
-	#np.random.shuffle(scales)
-	
+	scales = np.abs(1/freq[(psd >threshold)])
+	scales = scales.astype(np.int)
+	scales = np.unique(scales)
+	np.random.shuffle(scales)
 	scales = scales[0:min(nScales,len(scales)-1)]
 	return scales
 	
