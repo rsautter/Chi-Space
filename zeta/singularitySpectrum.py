@@ -109,7 +109,7 @@ def autoMFDFA(timeSeries,qs=np.linspace(2,15,60),nScales=500, scThresh=5e-3,nqs 
 		if (alpha<0.0).any():
 			continue
 		index = it
-		metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']
+		metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']/singularitySpectrumMetrics(alpha,falpha)['delta_alpha']
 		alphas[index] = alpha
 		falphas[index] = falpha  
 	criteria = np.argsort(metrics)
