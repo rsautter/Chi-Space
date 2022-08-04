@@ -64,7 +64,7 @@ def quadratic(x,a,b,c):
     return a*(x**2)+b*(x)+c
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.linspace(2,15,60),nScales=500, scThresh=5e-3,nqs = 14):
+def autoMFDFA(timeSeries,qs=np.arange(2,15),nScales=500, scThresh=1e-3, nTurns=30,nqs = 14):
 	'''
 	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
@@ -92,28 +92,29 @@ def autoMFDFA(timeSeries,qs=np.linspace(2,15,60),nScales=500, scThresh=5e-3,nqs 
 	nSeries = len(qs)
 	shape = (nSeries,nqs)
 	alphas,falphas,signSum,metrics = np.zeros(shape),np.zeros(shape),np.zeros(nSeries),np.full(nSeries,np.inf)
-	for it  in prange(len(qs)):
-		qrange = qs[it]
-		q = np.linspace(-qrange,qrange,nqs)
-		q = q[q != 0.0]
-		scales = selectScales(timeSeries,threshold=scThresh,nScales=nScales)
-		
-		lag,dfa = MFDFA(timeSeries, scales, q=q)
-		alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
-		if np.isnan(alpha).any() or np.isnan(falpha).any():
-			continue
-		sol,_ = curve_fit(quadratic,alpha,falpha)
-		if sol[0]> 0.0:
-			lmin,lmax = np.min(falpha),np.max(falpha)
-			falpha = -falpha+lmax+lmin
-		if (alpha<0.0).any():
-			alpha = -alpha
-		if (alpha<0.0).any():
-			continue
-		index = it
-		metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']/singularitySpectrumMetrics(alpha,falpha)['delta_alpha']
-		alphas[index] = alpha
-		falphas[index] = falpha  
+	for turn in range(len(nTurns)):
+		for it  in prange(len(qs)):
+			qrange = qs[it]
+			q = np.linspace(-qrange,qrange,nqs)
+			q = q[q != 0.0]
+			scales = selectScales(timeSeries,threshold=scThresh,nScales=nScales)
+			
+			lag,dfa = MFDFA(timeSeries, scales, q=q)
+			alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
+			if np.isnan(alpha).any() or np.isnan(falpha).any():
+				continue
+			sol,_ = curve_fit(quadratic,alpha,falpha)
+			if sol[0]> 0.0:
+				lmin,lmax = np.min(falpha),np.max(falpha)
+				falpha = -falpha+lmax+lmin
+			if (alpha<0.0).any():
+				alpha = -alpha
+			if (alpha<0.0).any():
+				continue
+			index = it
+			metrics[index] = singularitySpectrumMetrics(alpha,falpha)['asymmetry']/singularitySpectrumMetrics(alpha,falpha)['delta_alpha']
+			alphas[index] = alpha
+			falphas[index] = falpha  
 	criteria = np.argsort(metrics)
 	alphas,falphas,metrics = alphas[criteria],falphas[criteria],metrics[criteria]
 	return alphas[0],falphas[0], alphas, falphas, metrics
