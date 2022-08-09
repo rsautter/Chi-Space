@@ -2,6 +2,24 @@ from .spectralEntropy import *
 from .singularitySpectrum import *
 import numpy as np
 
-def zetaSpace(data,qs=np.array([5,6,7,8,9])):
-	a, fa, _, _, _ = autoMFDFA(data,qs=qs)
-	return {"spectral_entropy":spectralEntropy(data), "delta_alpha":singularitySpectrumMetrics(a,fa)["delta_alpha"]}
+def zetaSpace(data,qs=np.linspace(4,7,30),scThresh=1e-4,nqs = 20,**kwargs):
+	'''
+	========================================================================
+	
+	Generates an dictionary with the Entropy and Singularity Spectrum Concavity
+	
+	========================================================================
+	Input:
+	data - time series (0D+1)
+	qs - Hurst exponents extremes
+	scThresh - scale threshold of autoMFDFA
+	nqs - number of hurst exponents
+	**kwargs - PSD parameters
+	========================================================================
+	Output:
+	Dictionary with keywords: 'spectral_entropy' and 'concavity'
+	========================================================================
+	Wrote by: Rubens A. Sautter (08/2022)
+	'''
+	_,_, conc = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs)
+	return {"spectral_entropy":spectralEntropy(data,*kwargs), "concavity":conc}

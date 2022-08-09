@@ -13,7 +13,6 @@ def getPolynomial2(alpha,falpha):
 		
 def singularConcavity(alpha,falpha):
 	'''
-	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
 	Measures the concavity of the singularity spectrum
 	========================================================================
@@ -24,6 +23,7 @@ def singularConcavity(alpha,falpha):
 	Output:
 	Dictionay with the measures delta_alpha,max_f, delta_f and asymmetry
 	========================================================================
+	Wrote by: Rubens A. Sautter (02/2022)
 	'''
 	sol = getPolynomial2(alpha,falpha)
 	return -1.0/sol[0]
@@ -31,7 +31,6 @@ def singularConcavity(alpha,falpha):
 
 def singularitySpectrumMetrics(alpha,falpha):
 	'''
-	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
 	Measures of the singularity spectrum
 	========================================================================
@@ -42,6 +41,7 @@ def singularitySpectrumMetrics(alpha,falpha):
 	Output:
 	Dictionay with the measures delta_alpha,max_f, delta_f and asymmetry
 	========================================================================
+	Wrote by: Rubens A. Sautter (02/2022)
 	'''
 	maxFa = np.argmax(falpha)
 	delta = np.max(alpha)-np.min(alpha)
@@ -56,7 +56,6 @@ def singularitySpectrumMetrics(alpha,falpha):
 
 def selectScales(timeSeries,threshold=1e-3):
 	'''
-	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
 	Select random scales to apply MFDFA, from a set of scales with  
 	large Power Spectrum Density values 
@@ -68,6 +67,7 @@ def selectScales(timeSeries,threshold=1e-3):
 	Output:
 	scales - set of scales randomly selected
 	========================================================================
+	Wrote by: Rubens A. Sautter (02/2022)
 	'''
 	psd = np.fft.fft(timeSeries)
 	freq = np.fft.fftfreq(len(timeSeries))
@@ -92,15 +92,15 @@ def normalize(d):
 #@jit(forceobj=True,parallel=True)
 def autoMFDFA(timeSeries,qs=np.linspace(4,7,30), scThresh=1e-4,nqs = 20):
 	'''
-	Wrote by: Rubens A. Sautter (02/2022)
 	========================================================================
 	Complementary method to measure multifractal spectrum.
 	Base MFDFA implementation: https://github.com/LRydin/MFDFA
 
-	(I)	The time series is normalized according to its average and standard deviation	
-	(II)	Cumulative sum of the series
-	(III)	A set of scales is randomly selected, and the MFDFA is applied
-	(IV)	A quadratic polynomial is fitted for each multifractal spectrum,
+	(I)	A set of scales is randomly selected
+	(II)	The time series is normalized according to its global average and global standard deviation	
+	(III)	Cumulative sum of the series
+	(IV)	MFDFA is applied over the normalized time-series, with scales from step (I)
+	(V)	A quadratic polynomial is fitted for each multifractal spectrum,
 			if the first component (x^2) is positive, then the spectrum is discarded.
 	=========================================================================
 	Input:
@@ -114,6 +114,7 @@ def autoMFDFA(timeSeries,qs=np.linspace(4,7,30), scThresh=1e-4,nqs = 20):
 	alphas, falphas - set of multifractal spectrum
 	concavity - -1/a, where a is the first term of the quadratic equation (y = ax^2+bx+c ) 
 	=========================================================================
+	Wrote by: Rubens A. Sautter (02/2022)
 	'''
 	nSeries = len(qs)
 	shape = (nSeries,nqs)
