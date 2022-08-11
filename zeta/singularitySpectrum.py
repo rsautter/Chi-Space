@@ -92,20 +92,18 @@ def normalize(d):
 	return data
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.linspace(3,7,5), scThresh=1e-4,nqs = 10):
+def autoMFDFA(timeSeries,qs=np.linspace(3,10,30), scThresh=1e-4,nqs = 20):
 	'''
 	========================================================================
 	Complementary method to measure multifractal spectrum.
 	Base MFDFA implementation: https://github.com/LRydin/MFDFA
 
-	(I)	A set of scales with PSD greater than scThresh is selected 
-	(II)	The time series is normalized according to its global average and global standard deviation
+	(I)	A set of scales is randomly selected
+	(II)	The time series is normalized according to its global average and global standard deviation	
 	(III)	Cumulative sum of the series
-	(IV)	The series is renormalized according to its average and std
-	(V)	MFDFA is applied over the normalized time-series, with scales from step (I)
-	(VI)	A quadratic polynomial is fitted for each multifractal spectrum,
+	(IV)	MFDFA is applied over the normalized time-series, with scales from step (I)
+	(V)	A quadratic polynomial is fitted for each multifractal spectrum,
 			if the first component (x^2) is positive, then the spectrum is discarded.
-	(VII) 	The concavity with all multifractal spectrum sets is measured
 	=========================================================================
 	Input:
 	timeSeries - serie of elements (np.array)
