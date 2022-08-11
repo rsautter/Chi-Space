@@ -126,7 +126,7 @@ def autoMFDFA(timeSeries,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10):
 		falphas.append(falpha)
 
 	if len(alphas)>2:
-		return alphas, falphas, singularConcavity(np.array(alphas))
+		return alphas, falphas, deltaAlpha(np.array(alphas))
 	else:
 		raise Exception("Threshold should be lower! No singularity spectrum found")
 
