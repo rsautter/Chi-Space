@@ -11,23 +11,8 @@ def quadratic(x,a,b,c):
 def getPolynomial2(alpha,falpha):
 	return curve_fit(quadratic,alpha,falpha)[0]
 		
-def singularConcavity(alpha,falpha):
-	'''
-	========================================================================
-	Measures the concavity of the singularity spectrum
-	========================================================================
-	Input:
-	alpha - x values of the singularity spectrum (np.array that must have same lenght of falpha)
-	falpha - y values of the singularity spectrum (np.array that must have same lenght of alpha)
-	========================================================================
-	Output:
-	Dictionay with the measures delta_alpha,max_f, delta_f and asymmetry
-	========================================================================
-	Wrote by: Rubens A. Sautter (02/2022)
-	'''
-	sol = getPolynomial2(alpha,falpha)
-	return -1.0/sol[0]
-	
+def deltaAlpha(alpha):
+	return np.average(np.max(alpha,axis=1)-np.min(alpha,axis=1))
 
 def singularitySpectrumMetrics(alpha,falpha):
 	'''
@@ -139,10 +124,9 @@ def autoMFDFA(timeSeries,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10):
 			continue
 		alphas.append(alpha)
 		falphas.append(falpha)
-	ralphas,rfalphas = np.ravel(alphas),np.ravel(falphas)
-	seq = np.argsort(ralphas)
-	if len(ralphas)>2:
-		return alphas, falphas, singularConcavity(ralphas[seq],rfalphas[seq])
+
+	if len(alphas)>2:
+		return alphas, falphas, singularConcavity(np.array(alphas))
 	else:
 		raise Exception("Threshold should be lower! No singularity spectrum found")
 
