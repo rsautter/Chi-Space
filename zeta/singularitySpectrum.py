@@ -87,6 +87,7 @@ def normalize(d):
 	data = d-np.average(d)
 	data = data/np.std(data)
 	data = np.cumsum(data)
+	data = data-np.average(data)
 	data = data/np.std(data)
 	return data
 
