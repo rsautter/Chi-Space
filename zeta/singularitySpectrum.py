@@ -90,7 +90,7 @@ def normalize(d):
 	return data
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.linspace(4,7,30), scThresh=1e-4,nqs = 20):
+def autoMFDFA(timeSeries,qs=np.linspace(3,10,30), scThresh=1e-4,nqs = 20):
 	'''
 	========================================================================
 	Complementary method to measure multifractal spectrum.
@@ -134,13 +134,13 @@ def autoMFDFA(timeSeries,qs=np.linspace(4,7,30), scThresh=1e-4,nqs = 20):
 		if sol[0]>= 0.0:
 			continue
 		if (alpha<0.0).any():
-			alpha = -alpha
-		if (alpha<0.0).any():
 			continue
 		alphas.append(alpha)
 		falphas.append(falpha)
 	ralphas,rfalphas = np.ravel(alphas),np.ravel(falphas)
 	seq = np.argsort(ralphas)
-	
-	return alphas, falphas, singularConcavity(ralphas[seq],rfalphas[seq])
+	if len(ralphas)>2:
+		return alphas, falphas, singularConcavity(ralphas[seq],rfalphas[seq])
+	else:
+		raise Exception("Threshold should be lower! No singularity spectrum found")
 
