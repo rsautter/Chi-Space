@@ -22,4 +22,4 @@ def zetaSpace(data,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10,**kwargs):
 	Wrote by: Rubens A. Sautter (08/2022)
 	'''
 	_,_, conc = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs)
-	return {"spectral_entropy":spectralEntropy(data,*kwargs), "concavity":conc}
+	return {"spectral_entropy":spectralEntropy(data,*kwargs), "delta_alpha":conc}
