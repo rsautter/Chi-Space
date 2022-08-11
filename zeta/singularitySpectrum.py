@@ -92,7 +92,7 @@ def normalize(d):
 	return data
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.linspace(3,10,30), scThresh=1e-4,nqs = 20):
+def autoMFDFA(timeSeries,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10):
 	'''
 	========================================================================
 	Complementary method to measure multifractal spectrum.
