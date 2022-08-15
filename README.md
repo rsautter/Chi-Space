@@ -15,6 +15,12 @@ Some examples are shown [here](https://github.com/rsautter/Zeta-Space/tree/main/
  - Numba
  - MFDFA==0.4.1
 
+## Parametric Space example:
+
+![plot](./imgs/zetaSpace.png)
+
+ [Standard Cases](https://github.com/rsautter/Zeta-Space/blob/main/examples/ZetaSpace_AllStandardPatterns.ipynb) 
+
 ## References:
 
 [1] J.W. Kantelhardt, S.A. Zschiegner, E. Koscielny-Bunde, S. Havlin, A. Bunde,H. Stanley, Physica A 316 (1) (2002) 87–114.<br>
@@ -25,3 +31,4 @@ https://github.com/LRydin/MFDFA
 
 ## Changelog
  * 1-August-2022 - Initial commit
+ * 15-August-2022 - Added all time-series main patterns
