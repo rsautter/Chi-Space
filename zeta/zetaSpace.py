@@ -2,7 +2,7 @@ from .spectralEntropy import *
 from .singularitySpectrum import *
 import numpy as np
 
-def zetaSpace(data,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10,**kwargs):
+def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=7,**kwargs):
 	'''
 	========================================================================
 	
@@ -23,5 +23,5 @@ def zetaSpace(data,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10,**kwargs):
 	========================================================================
 	Wrote by: Rubens A. Sautter (08/2022)
 	'''
-	_,_, lda = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs)
+	_,_, lda = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs,nsamples=nsamples, nscales=nscales,magnify=magnify)
 	return {"ISE":1-spectralEntropy(data,*kwargs), "LDA":lda}
