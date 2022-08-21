@@ -77,12 +77,12 @@ def generateUniformExo(N=4096):
   p = (0.8-0.675)*np.random.rand()+0.675
   beta = (0.75-0.65)*np.random.rand()+0.65
   #print(p,beta)
-  x, _ = pmodel (N, p, beta)
-  return np.array(x), p, beta
+  x, dx = pmodel (N, p, beta)
+  return np.array(dx), p, beta
 
 def generateUniformEndo(N=4096):
   #  0.525 < p < 0.65 , 0.35 < beta < 0.45
   p = (0.65-0.525)*np.random.rand()+0.525
   beta = (0.45-0.35)*np.random.rand()+0.35
-  x, _ = pmodel (N, p, beta)
-  return np.array(x), p, beta
+  x, dx = pmodel (N, p, beta)
+  return np.array(dx), p, beta

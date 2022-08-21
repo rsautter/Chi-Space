@@ -17,9 +17,11 @@ def zetaSpace(data,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10,**kwargs):
 	**kwargs - PSD parameters
 	========================================================================
 	Output:
-	Dictionary with keywords: 'spectral_entropy' and 'concavity'
+	Dictionary with keywords 'ISE' and 'LDA', where:
+	ISE - Inverse Spectral Entropy
+	LDA - Logistic Delta Alpha
 	========================================================================
 	Wrote by: Rubens A. Sautter (08/2022)
 	'''
-	_,_, conc = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs)
-	return {"spectral_entropy":spectralEntropy(data,*kwargs), "delta_alpha":conc}
+	_,_, lda = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs)
+	return {"ISE":1-spectralEntropy(data,*kwargs), "LDA":lda}

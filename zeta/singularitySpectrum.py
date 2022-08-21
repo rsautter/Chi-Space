@@ -5,6 +5,11 @@ import numpy as np
 from numba import jit, prange
 from scipy.optimize import curve_fit
 
+import warnings
+warnings.filterwarnings("ignore")
+
+
+
 def quadratic(x,a,b,c):
     return a*(x**2)+b*(x)+c
 
@@ -13,6 +18,9 @@ def getPolynomial2(alpha,falpha):
 		
 def deltaAlpha(alpha):
 	return np.average(np.max(alpha,axis=1)-np.min(alpha,axis=1))
+	
+def logisticHalfAvg(x,k=7):
+	return 1/(1+np.exp(k*(0.5-x)))
 
 def singularitySpectrumMetrics(alpha,falpha):
 	'''
@@ -39,10 +47,10 @@ def singularitySpectrumMetrics(alpha,falpha):
 		'concavity': singularConcavity(alpha,falpha)
 		}
 
-def selectScales(timeSeries,threshold=1e-3):
+def selectScales(timeSeries,threshold=1e-3,nscales=30):
 	'''
 	========================================================================
-	Select random scales to apply MFDFA, from a set of scales with  
+	Select random scales to apply MFDFA, from a set of frequencies with  
 	large Power Spectrum Density values 
 	========================================================================
 	Input:
@@ -57,76 +65,113 @@ def selectScales(timeSeries,threshold=1e-3):
 	psd = np.fft.fft(timeSeries)
 	freq = np.fft.fftfreq(len(timeSeries))
 	psd = np.real(psd*np.conj(psd))
-	pos = (freq>threshold)
+	pos = (freq>1e-13)
 	psd = psd[pos]
 	freq = freq[pos]
 	maxPSD = np.max(psd)
 	psd = psd/maxPSD
-	scales = np.abs(1/freq[(psd >threshold)])
+	scales = 1/np.abs(freq[(psd >threshold)])
 	scales = scales.astype(np.int)
 	scales = np.unique(scales)
 	scales = np.sort(scales)
-	return scales
+	return np.random.choice(scales,nscales)
 
 def normalize(d):
 	data = d-np.average(d)
 	data = data/np.std(data)
-	data = np.cumsum(data)
-	data = data-np.average(data)
-	data = data/np.std(data)
 	return data
+	
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.linspace(3,15,10), scThresh=1e-4,nqs = 10):
+def autoMFDFA(timeSeries,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=7):
 	'''
 	========================================================================
 	Complementary method to measure multifractal spectrum.
 	Base MFDFA implementation: https://github.com/LRydin/MFDFA
 
-	(I)	A set of scales is randomly selected
-	(II)	The time series is normalized according to its global average and global standard deviation	
-	(III)	Cumulative sum of the series
-	(IV)	MFDFA is applied over the normalized time-series, with scales from step (I)
-	(V)	A quadratic polynomial is fitted for each multifractal spectrum,
-			if the first component (x^2) is positive, then the spectrum is discarded.
+	(I)	The time series is normalized according to its global average and global standard deviation
+	(II)	A set of scales is randomly selected	
+	(III)	MFDFA is applied over the normalized time-series  ('nsamples' times) 
+	(IV)	Delta Alpha is measured
+	(V)	Singularity spectrum with delta alpha outliers (greater than average + standard deviation) are removed 
+	(VI)	logistic function is measured
 	=========================================================================
 	Input:
 	timeSeries - serie of elements (np.array)
 	qs - set of hurst exponent ranges
 	scThresh - threshold to select DFA scales (see selectScales function)
 	nqs - number of hurst exponents measured
+	nsamples - number of singularity spectrum samples per hurst exponent set (q)
+	nscales - number of random scales
+	magnify - logistic function constant - greater values increases the differences between extremes
 
 	=========================================================================
 	Output:
 	alphas, falphas - set of multifractal spectrum
-	concavity - -1/a, where a is the first term of the quadratic equation (y = ax^2+bx+c ) 
+	LDA -  Logistic of the average delta alpha
 	=========================================================================
 	Wrote by: Rubens A. Sautter (02/2022)
 	'''
-	nSeries = len(qs)
-	shape = (nSeries,nqs)
+	
+	# signularity spectra of the series
 	alphas,falphas = [], []
+	
+	# signularity spectra of surrogate series
+	salphas,sfalphas = [], []
+	
 	data = normalize(timeSeries)
-	scales = selectScales(timeSeries,threshold=scThresh)
-	for it  in prange(len(qs)):
-		qrange = qs[it]
-		q = np.linspace(-qrange,qrange,nqs)
-		q = q[q != 0.0]
+	
+	deltas = []
+	 
+	for i in range(nsamples):
+		scales = selectScales(data,threshold=scThresh,nscales=nscales)
+		for it  in prange(len(qs)):
+			qrange = qs[it]
+			q = np.linspace(-qrange,qrange,nqs)
+			q = q[q != 0.0]
+			lag,dfa = MFDFA(data, scales, q=q)
+			alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
+			if np.isnan(alpha).any() or np.isnan(falpha).any():
+				continue
+			if (falpha>1.5).any():
+				continue
+			alphas.append(alpha)
+			falphas.append(falpha)
+			deltas.append(deltaAlpha([alpha]))
 			
-		lag,dfa = MFDFA(data, scales, q=q)
-		alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
-		if np.isnan(alpha).any() or np.isnan(falpha).any():
-			continue
-		sol = getPolynomial2(alpha,falpha)
-		if sol[0]>= 0.0:
-			continue
-		if (alpha<0.0).any():
-			continue
-		alphas.append(alpha)
-		falphas.append(falpha)
-
+	# Remove outlier:
+	alphas,falphas = np.array(alphas),np.array(falphas) 
+	alphas = alphas[ (deltas < np.average(deltas)+np.std(deltas)) ]
+	falphas = falphas[(deltas < np.average(deltas)+np.std(deltas))]
+	delta = deltaAlpha(alphas)
+	
+	'''
+	#Surrogate testing
+	s = surrogate(data)
+	deltas = []
+	for i in range(nsamples):
+		scales = selectScales(s,threshold=scThresh,nscales=nscales)
+		for it  in prange(len(qs)):
+			qrange = qs[it]
+			q = np.linspace(-qrange,qrange,nqs)
+			q = q[q != 0.0]
+			lag,dfa = MFDFA(s, scales, q=q)
+			alpha,falpha = singspect.singularity_spectrum(lag,dfa,q=q)
+			if np.isnan(alpha).any() or np.isnan(falpha).any():
+				continue
+			if deltaAlpha([alpha])>delta:
+				# not well shuffled or bad scales
+				continue
+			if (falpha>1.5).any():
+				continue
+			salphas.append(alpha)
+			sfalphas.append(falpha)
+			deltas.append(deltaAlpha([alpha]))
+	ds = deltaAlpha(np.array(salphas))		
+	'''
+	d = deltaAlpha(np.array(alphas)) 
 	if len(alphas)>2:
-		return alphas, falphas, deltaAlpha(np.array(alphas))
+		return alphas, falphas, logisticHalfAvg(d,magnify) 
 	else:
 		raise Exception("Threshold should be lower! No singularity spectrum found")
 
