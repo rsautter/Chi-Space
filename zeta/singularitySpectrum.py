@@ -44,7 +44,8 @@ def singularitySpectrumMetrics(alpha,falpha):
 		'max_f':falpha[maxFa],
 		'delta_f': (np.max(falpha)-np.min(falpha)),
 		'asymmetry': assym,
-		'concavity': singularConcavity(alpha,falpha)
+		'alpha':alpha,
+		'falpha':falpha
 		}
 
 def selectScales(timeSeries,threshold=1e-3,nscales=30):
