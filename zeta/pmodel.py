@@ -86,3 +86,32 @@ def generateUniformEndo(N=4096):
   beta = (0.45-0.35)*np.random.rand()+0.35
   x, dx = pmodel (N, p, beta)
   return np.array(dx), p, beta
+  
+
+####################################################
+# Experimental spectral normalization: (R.Sautter-2022)
+# 
+
+def specNorm(series,newBeta):
+	ft = np.fft.fft(series)
+	
+	# finding the power-law:
+	psd = np.real(ft.copy()*np.conj(ft.copy()))
+	freq = np.fft.fftfreq(len(series))
+	psd, freq = psd[freq>0.0], freq[freq>0]
+	[oldBeta, _] = np.polyfit(np.log(freq),np.log(psd),deg =1)
+	oldBeta = -oldBeta
+	
+	pot = (oldBeta-newBeta)/2
+	freq = np.abs(np.fft.fftfreq(len(series)))
+	
+	print(pot)
+	
+	# rebuilding the spectrum from the older log-log rule and the new log-log rule
+	ft[1:] = ft[1:]*(freq[1:]**pot) 
+	
+	return np.real(np.fft.ifft(ft))
+	
+		  
+  
+  
