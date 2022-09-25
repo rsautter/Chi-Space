@@ -84,7 +84,7 @@ def normalize(d):
 	
 
 #@jit(forceobj=True,parallel=True)
-def autoMFDFA(timeSeries,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=7):
+def autoMFDFA(timeSeries,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
 	'''
 	========================================================================
 	Complementary method to measure multifractal spectrum.

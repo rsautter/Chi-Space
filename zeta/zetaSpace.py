@@ -3,7 +3,7 @@ from .singularitySpectrum import *
 from .qqMetric import *
 import numpy as np
 
-def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=7):
+def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
 	'''
 	========================================================================
 	
@@ -15,6 +15,8 @@ def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, n
 	qs - Hurst exponents extremes
 	scThresh - scale threshold of autoMFDFA
 	nqs - number of hurst exponents
+	nsamples - number of scale samples to compute delta alpha
+	magnify - logistic function parameter (for delta alpha normalization)
 	========================================================================
 	Output:
 	Dictionary with keywords 'GQQ' and 'LDA', where:
