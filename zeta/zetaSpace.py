@@ -2,7 +2,7 @@ from .spectralEntropy import *
 from .singularitySpectrum import *
 import numpy as np
 
-def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=7,**kwargs):
+def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5,**kwargs):
 	'''
 	========================================================================
 	
