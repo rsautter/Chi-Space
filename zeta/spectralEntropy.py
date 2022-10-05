@@ -6,6 +6,12 @@ def getPSD(data):
 	psd = np.real(psd*np.conj(psd))
 	freq = np.fft.fftfreq(len(data))
 	return freq, psd
+	
+def getPowerLaw(data):
+	freq, psd = getPSD(data)
+	posFreq = (freq>0.0)
+	beta, _ = np.polyfit(np.log(freq[posFreq]),np.log(psd[posFreq]),deg=1)
+	return beta
 
 def spectralEntropy(data, method='fft',start=0,end=None,**kwargs):
 	'''
