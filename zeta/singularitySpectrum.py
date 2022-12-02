@@ -82,6 +82,28 @@ def normalize(d):
 	data = data/np.std(data)
 	return data
 	
+def getAverageSing(serie):
+	'''
+	========================================================================
+	Retrieves the singularity spectrum with median delta alpha
+	========================================================================
+	Input:
+	serie - time series
+	========================================================================
+	Output:
+	alphas and f(alphas)
+	========================================================================
+	Wrote by: Rubens A. Sautter (12/2022)
+	'''
+	a, fa, lda = autoMFDFA(serie,nqs=20)		
+	metrics = [singularitySpectrumMetrics(a[i],fa[i]) for i in range(len(a))]
+	#metrics = pd.DataFrame(metrics)
+	#metrics = metrics.sort_values(by=['delta_alpha'])
+	#median = metrics.iloc[metrics.shape[0]//2]
+	#a, fa = median["alpha"],median["falpha"]
+
+	return np.average(a,axis=0), np.average(fa,axis=0)
+	
 
 #@jit(forceobj=True,parallel=True)
 def autoMFDFA(timeSeries,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
