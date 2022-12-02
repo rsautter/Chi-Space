@@ -4,6 +4,7 @@ import numpy as np
 #import numba
 from numba import jit, prange
 from scipy.optimize import curve_fit
+import pandas as pd
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -47,6 +48,28 @@ def singularitySpectrumMetrics(alpha,falpha):
 		'alpha':alpha,
 		'falpha':falpha
 		}
+
+def getAverageSing(serie):
+	'''
+	========================================================================
+	Retrieves the singularity spectrum with median delta alpha
+	========================================================================
+	Input:
+	serie - time series
+	========================================================================
+	Output:
+	alphas and f(alphas)
+	========================================================================
+	Wrote by: Rubens A. Sautter (12/2022)
+	'''
+	a, fa, lda = autoMFDFA(serie,nqs=20)		
+	metrics = [singularitySpectrumMetrics(a[i],fa[i]) for i in range(len(a))]
+	#metrics = pd.DataFrame(metrics)
+	#metrics = metrics.sort_values(by=['delta_alpha'])
+	#median = metrics.iloc[metrics.shape[0]//2]
+	#a, fa = median["alpha"],median["falpha"]
+	
+	return np.average(a,axis=0), np.average(fa,axis=0)
 
 def selectScales(timeSeries,threshold=1e-3,nscales=30):
 	'''
