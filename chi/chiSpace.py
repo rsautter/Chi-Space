@@ -3,7 +3,7 @@ from .singularitySpectrum import *
 from .qqMetric import *
 import numpy as np
 
-import pkgutil
+from pkgutil import extend_path
 from io import StringIO
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
@@ -46,10 +46,11 @@ def plot(figsize=(12,12)):
 	Wrote by: Rubens A. Sautter (12/2022)
 	'''
 	# Loading data
-	endo = pd.read_csv(StringIO(pkgutil.get_data('Chi-Space', 'results/zEndo.csv')))
-	exo = pd.read_csv(StringIO(pkgutil.get_data('Chi-Space', 'results/zExo.csv')))
-	reds = pd.read_csv(StringIO(pkgutil.get_data('Chi-Space', 'results/zRed.csv')))
-	zL = pd.read_csv(StringIO(pkgutil.get_data('Chi-Space', 'results/zLorenz.csv')))
+	__path__ = extend_path(__path__, __name__)
+	endo = pd.read_csv('results/zEndo.csv')
+	exo = pd.read_csv('results/zExo.csv')
+	reds = pd.read_csv('results/zRed.csv')
+	zL = pd.read_csv('results/zLorenz.csv')
 	
 	# Plotting
 	
