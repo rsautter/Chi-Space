@@ -114,3 +114,4 @@ def plot(figsize=(12,12)):
 	plt.tight_layout()
 	#plt.savefig("Zeta.png",dpi=400)
 	#plt.show()
+	return gs
