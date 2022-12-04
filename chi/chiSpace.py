@@ -72,7 +72,8 @@ def plot(figsize=(12,12)):
 		             Line2D([0], [0], color='red', lw=6),
 		             Line2D([0], [0], color='goldenrod', lw=6)
 		             ]
-	plt.legend(handles,['Endogenous p-model','Exogenous p-model','Red Noise','Lorenz Synchronization'],loc=2)
+	labels = ['Endogenous p-model','Exogenous p-model','Red Noise','Lorenz Synchronization']
+	plt.legend(handles,labels,loc=2)
 	plt.xlabel('')
 	plt.xticks([])
 	plt.yticks([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
@@ -114,4 +115,4 @@ def plot(figsize=(12,12)):
 	plt.tight_layout()
 	#plt.savefig("Zeta.png",dpi=400)
 	#plt.show()
-	return gs
+	return gs, [handles,labels]
