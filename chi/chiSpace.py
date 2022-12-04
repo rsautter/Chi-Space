@@ -46,7 +46,11 @@ def plot(figsize=(12,12)):
 	Wrote by: Rubens A. Sautter (12/2022)
 	'''
 	# Loading data
-	__path__ = extend_path(__path__, __name__)
+	endo = pkgutil.get_data('Chi-Space.results', 'zEndo.csv')
+	print("Got it!")
+	endo = pd.DataFrame(StringIO(endo.decode()))
+	print("Endo:",endo)
+	
 	endo = pd.read_csv('results/zEndo.csv')
 	exo = pd.read_csv('results/zExo.csv')
 	reds = pd.read_csv('results/zRed.csv')
