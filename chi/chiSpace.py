@@ -3,7 +3,7 @@ from .singularitySpectrum import *
 from .qqMetric import *
 import numpy as np
 
-from pkgutil import extend_path
+import pkgutil 
 from io import StringIO
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
