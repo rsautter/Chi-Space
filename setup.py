@@ -1,12 +1,12 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='zetaSpace',
-    version='0.1',
-    url='https://github.com/rsautter/Zeta-Space',
+    name='Chi-Space',
+    version='0.2',
+    url='https://github.com/rsautter/Chi-Space',
     author='Rubens Andreas Sautter',
     author_email='rubens.sautter@gmail.com',
-    keywords='Multifractal PSD Time-series',
-    description=u'Zeta Space Package (spectral entropy x delta alpha)',
+    keywords='Multifractal QQPlot Time-series',
+    description=u'Chi Space Package (Logistic Delta alpha x Gaussian Quartile-Quartile distance)',
      packages=find_packages()
 )

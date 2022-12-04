@@ -3,11 +3,11 @@ from .singularitySpectrum import *
 from .qqMetric import *
 import numpy as np
 
-def zetaSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
+def chiSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
 	'''
 	========================================================================
 	
-	Generates an dictionary with the Entropy and Singularity Spectrum Concavity
+	Generates an dictionary with the Gaussian Distance metric (GQQ) and the Logistic Delta Alpha (LDA)
 	
 	========================================================================
 	Input:

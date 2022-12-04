@@ -3,7 +3,6 @@ import numpy as np
 
 def cNoise(beta,shape=(1024,),std=0.001, maxCorrections=10,maxAvgError=0.01, eta=0.6, verbose = False):
     '''
-       Wrote by: Rubens Andreas Sautter (2021)
        
        An parameter of correction has been used (s):
        	FFT(f(w)) = gauss(0,std) * (1/w^beta)^(beta*s/2) 
@@ -25,6 +24,9 @@ def cNoise(beta,shape=(1024,),std=0.001, maxCorrections=10,maxAvgError=0.01, eta
        =====================================================================================
        Inspired by:
       http://articles.adsabs.harvard.edu//full/1995A%26A...300..707T/0000707.000.html
+      ======================================================================================
+      
+       Wrote by: Rubens Andreas Sautter (2021)
     '''
     dimension = []
     for index,dsize in enumerate(shape):
