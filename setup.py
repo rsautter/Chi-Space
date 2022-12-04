@@ -8,5 +8,5 @@ setup(
     author_email='rubens.sautter@gmail.com',
     keywords='Multifractal QQPlot Time-series',
     description=u'Chi Space Package (Logistic Delta alpha x Gaussian Quartile-Quartile distance)',
-     packages=find_packages()
+    packages=find_packages()
 )

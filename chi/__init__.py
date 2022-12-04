@@ -5,3 +5,4 @@ from .cNoise import *
 from .pmodel import *
 from .qqMetric import *
 from .lorenz import *
+from .datasetFinder import *

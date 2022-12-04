@@ -1,10 +1,9 @@
 from .spectralEntropy import *
 from .singularitySpectrum import *
 from .qqMetric import *
+from .datasetFinder import *
 import numpy as np
 
-import pkgutil 
-from io import StringIO
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import pandas as pd
@@ -45,16 +44,11 @@ def plot(figsize=(12,12)):
 	========================================================================
 	Wrote by: Rubens A. Sautter (12/2022)
 	'''
-	# Loading data
-	endo = pkgutil.get_data('Chi-Space.results', 'zEndo.csv')
-	print("Got it!")
-	endo = pd.DataFrame(StringIO(endo.decode()))
-	print("Endo:",endo)
-	
-	endo = pd.read_csv('results/zEndo.csv')
-	exo = pd.read_csv('results/zExo.csv')
-	reds = pd.read_csv('results/zRed.csv')
-	zL = pd.read_csv('results/zLorenz.csv')
+	# Loading data	
+	endo = get_endoDataResults()
+	exo = get_exoDataResults()
+	reds = get_redsDataResults()
+	zL = get_LorenzDataResults()
 	
 	# Plotting
 	
