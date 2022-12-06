@@ -17,3 +17,18 @@ def get_redsDataResults():
 	
 def get_LorenzDataResults():
 	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/results/zLorenz.csv')
+
+def get_Acoustic1():
+	'''
+	Source:
+		https://www.kaggle.com/competitions/LANL-Earthquake-Prediction/overview
+	'''
+	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/seg_1b1ad8.csv')["acoustic_data"].values
+
+def get_Acoustic2():
+	'''
+	Source:
+		https://www.kaggle.com/competitions/LANL-Earthquake-Prediction/overview
+	'''
+	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/seg_1bd38e.csv')["acoustic_data"].values
+
