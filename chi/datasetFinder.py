@@ -39,7 +39,7 @@ def get_WikiTraffic(index=0):
 	Source:
 		https://www.kaggle.com/competitions/web-traffic-time-series-forecasting/overview
 	'''
-	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/trafficWiki.csv').iloc[index].values[1:]
+	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/wikipediaWebTraffic.csv').iloc[index].values[1:]
 
 
 
