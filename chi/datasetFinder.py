@@ -24,7 +24,7 @@ def get_Acoustic1():
 		https://www.kaggle.com/competitions/LANL-Earthquake-Prediction/overview
 	'''
 	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/seg_1b1ad8.csv')["acoustic_data"].values
-x
+
 def get_Acoustic2():
 	'''
 	Source:
