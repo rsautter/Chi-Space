@@ -17,3 +17,6 @@ def get_redsDataResults():
 	
 def get_LorenzDataResults():
 	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/results/zLorenz.csv')
+	
+def get_TemperatureGISS():
+	return pd.read_csv("https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.csv",skiprows=1)["No_Smoothing"]
