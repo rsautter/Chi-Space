@@ -22,7 +22,7 @@ plt.show()
 </code></pre>
 
 
-<img src="./imgs/chiSpace.png" width=60% height=60%>
+<img src="https://raw.githubusercontent.com/rsautter/Chi-Space/main/imgs/chiSpace.png" width=60% height=60%>
 
 
 ## General application:
