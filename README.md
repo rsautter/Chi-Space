@@ -1,25 +1,34 @@
-# Zeta Space 
+# Ꭓ-Space 
 
-Implementation of the zeta-space for time-series ( $S_H$ x $\Delta \alpha$ ).
+Implementation of the Ꭓ-space for time-series ( $L(\Delta \alpha)$ x $G_{QQ}$).
 
 Some examples are shown [here](https://github.com/rsautter/Zeta-Space/tree/main/examples)
 
 ### Installing on colab:
-<pre><code>!pip install MFDFA==0.4.1
-!pip install git+https://github.com/rsautter/Zeta-Space/
+<pre><code>!pip install MFDFA
+!pip install git+https://github.com/rsautter/Chi-Space/
 </code></pre>
 
 ### Requirements:
  - Numpy
  - Scipy
- - Numba
- - MFDFA==0.4.1
-
+ - MFDFA
+ 
 ## Parametric Space example:
+<pre><code>import chi
+import matplotlib.pyplot as plt
+gs,[h,l] = chi.plot()
+plt.show()
+</code></pre>
 
-![plot](./imgs/zetaSpace.png)
 
- [Standard Cases](https://github.com/rsautter/Zeta-Space/blob/main/examples/ZetaSpace_AllStandardPatterns.ipynb) 
+<img src="./imgs/chiSpace.png" width=60% height=60%>
+
+
+## General application:
+<pre><code>import chi
+chi.chiSpace(timeseries)
+</code></pre>
 
 ## References:
 
