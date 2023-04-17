@@ -5,6 +5,14 @@ def get_SolarWind():
 
 def get_SurrogateSolarWind():
 	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/GaussSW4096.csv',header=None).values.T[0]
+	
+def get_SYMH():
+	'''
+	The reference paper is: 
+	https://www.researchgate.net/publication/342285814_Disentangling_nonlinear_geomagnetic_variability_during_magnetic_storms_and_quiescence_by_timescale_dependent_recurrence_properties
+	The data source available at: https://omniweb.gsfc.nasa.gov/form/omni_min.html
+	'''
+	return pd.read_csv(r"https://raw.githubusercontent.com/rsautter/Chi-Space/main/data/SYM.H.csv")
 
 def get_endoDataResults():
 	return pd.read_csv(r'https://raw.githubusercontent.com/rsautter/Chi-Space/main/results/zEndo.csv')

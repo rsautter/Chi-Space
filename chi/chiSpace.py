@@ -113,6 +113,49 @@ def plot(figsize=(12,12)):
 	plt.ylabel('')
 	plt.xlabel(r"$L(\Delta \alpha)$",fontsize=20)
 	plt.tight_layout()
-	#plt.savefig("Zeta.png",dpi=400)
-	#plt.show()
+	
+def plot2(figsize=(12,12)):
+	'''
+	========================================================================
+	Plots the Chi-Space using matplotlib and seaborn
+	========================================================================
+	figsize - size of of the figure frame
+	========================================================================
+	Wrote by: Rubens A. Sautter (12/2022)
+	'''
+	# Loading data	
+	endo = chi.get_endoDataResults()
+	exo = chi.get_exoDataResults()
+	reds = chi.get_redsDataResults()
+	zL = chi.get_LorenzDataResults()
+	
+	# Plotting
+	
+	gs = GridSpec(1, 1,wspace=0,hspace=0)
+
+	plt.figure(figsize=figsize)
+
+	plt.subplot(gs[0,0])
+	sns.kdeplot(data=zL, x="LDA", y="GQQ",fill=True,color='goldenrod',thresh=0.02,alpha = 0.3)
+	#plt.scatter(zL["LDA"],zL["GQQ"])
+	sns.kdeplot(data=endo, x="LDA", y="GQQ",fill=True,color='cyan',thresh=0.05,alpha = 0.5)
+	sns.kdeplot(data=exo, x="LDA", y="GQQ",fill=True,color='blue',thresh=0.005,alpha = 0.7)
+	sns.kdeplot(data=reds, x="LDA", y="GQQ",fill=True,color='red',thresh=0.05,alpha = 0.5)
+
+	#wn = plt.scatter(0.0,0.0,s=200,color='k')
+
+	plt.xlim(0.0,1.0)
+	plt.ylim(0.0,1.0)
+	handles = [Line2D([0], [0], color='cyan', lw=6),
+		             Line2D([0], [0], color='blue', lw=6),
+		             Line2D([0], [0], color='red', lw=6),
+		             Line2D([0], [0], color='goldenrod', lw=6)
+		             ]
+	labels = ['Endogenous p-model','Exogenous p-model','Red Noise','Lorenz Synchronization']
+	plt.legend(handles,labels,loc=2)
+	plt.xlabel('')
+	plt.xticks([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+	plt.yticks([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
+	plt.ylabel(r"$G_{QQ}$",fontsize=20)
+	plt.xlabel(r"$L_{\Delta\alpha}$",fontsize=20)
 	return gs, [handles,labels]
