@@ -35,6 +35,43 @@ def chiSpace(data,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, ns
 	_,_, lda = autoMFDFA(data,qs=qs,scThresh=scThresh,nqs=nqs,nsamples=nsamples, nscales=nscales,magnify=magnify)
 	return {"GQQ":qqGaussianDistance(data), "LDA":lda}
 	
+def bootstrapChi(data,bsamples=np.linspace(0.8,1.0,20),qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples=40, nscales=20,magnify=5):
+	'''
+	========================================================================
+	
+	Bootstraps the time series around the peak to find the distribution of Gaussian Distance metric (GQQ) and the Logistic Delta Alpha (LDA)
+	returns a pandas dataframe
+	
+	========================================================================
+	Input:
+	data - time series (0D+1)
+	bsamples  - percentage to bootstrap the series around the maximum value (must be a list of floatoing points in the interval ]0,1] )
+	qs - Hurst exponents extremes
+	scThresh - scale threshold of autoMFDFA
+	nqs - number of hurst exponents
+	nsamples - number of scale samples to compute delta alpha
+	magnify - logistic function parameter (for delta alpha normalization)
+	========================================================================
+	Output:
+	Dictionary with keywords 'GQQ' and 'LDA', where:
+	GQQ - Gaussian Q-Q Plot distance
+	LDA - Logistic Delta Alpha
+	========================================================================
+	Wrote by: Rubens A. Sautter (04/2023)
+	'''
+	peak = np.argmax(np.abs(data))
+	samples = []
+	for p in bsamples:
+		npoints = int(p*len(data))
+		if peak>len(data)//2:
+			maxPoint = (peak+npoints//2)%len(data)
+			minPoint = maxPoint-npoints
+		else:
+			minPoint = max(0,peak-npoints//2)
+			maxPoint = peak + npoints -minPoint
+		samples.append(chiSpace(data[minPoint:maxPoint],qs,scThresh,nqs,nsamples,nscales,magnify))
+	return pd.DataFrame(samples)
+	
 def plot(figsize=(12,12)):
 	'''
 	========================================================================
