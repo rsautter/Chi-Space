@@ -64,11 +64,12 @@ def bootstrapChi(data,bsamples=np.linspace(0.8,1.0,20),qs=np.arange(5,15,2), scT
 	for p in bsamples:
 		npoints = int(p*len(data))
 		if peak>len(data)//2:
-			maxPoint = (peak+npoints//2)%len(data)
+			maxPoint = min(peak+npoints//2,len(data))
 			minPoint = maxPoint-npoints
 		else:
 			minPoint = max(0,peak-npoints//2)
 			maxPoint = peak + npoints -minPoint
+		print(minPoint:maxPoint)
 		samples.append(chiSpace(data[minPoint:maxPoint],qs,scThresh,nqs,nsamples,nscales,magnify))
 	return pd.DataFrame(samples)
 	
