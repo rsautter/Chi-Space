@@ -161,10 +161,10 @@ def plot2(figsize=(12,12)):
 	Wrote by: Rubens A. Sautter (12/2022)
 	'''
 	# Loading data	
-	endo = chi.get_endoDataResults()
-	exo = chi.get_exoDataResults()
-	reds = chi.get_redsDataResults()
-	zL = chi.get_LorenzDataResults()
+	endo = get_endoDataResults()
+	exo = get_exoDataResults()
+	reds = get_redsDataResults()
+	zL = get_LorenzDataResults()
 	
 	# Plotting
 	
@@ -194,5 +194,6 @@ def plot2(figsize=(12,12)):
 	plt.xticks([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
 	plt.yticks([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0])
 	plt.ylabel(r"$G_{QQ}$",fontsize=20)
-	plt.xlabel(r"$L_{\Delta\alpha}$",fontsize=20)
+	plt.xlabel(r"$L(\Delta\alpha)$",fontsize=20)
+	
 	return gs, [handles,labels]
