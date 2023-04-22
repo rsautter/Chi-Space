@@ -72,6 +72,34 @@ def bootstrapChi(data,bsamples=np.linspace(0.8,1.0,20),qs=np.arange(5,15,2), scT
 		samples.append(chiSpace(data[minPoint:maxPoint],qs,scThresh,nqs,nsamples,nscales,magnify))
 	return pd.DataFrame(samples)
 	
+def segmentPeak(data,windowSize=0.25):
+	'''
+	========================================================================
+	
+	Selects the region around the largest peak of the time series.
+	The size of the region is determined as a percentage of the original series
+	
+	========================================================================
+	Input:
+	data - time series (0D+1)
+	windowSize  - percentage of the time series select around the peak 
+	========================================================================
+	Output:
+	Series centralized
+	========================================================================
+	Wrote by: Rubens A. Sautter (04/2023)
+	'''
+	peak = np.argmax(np.abs(data))
+	samples = []
+	npoints = int(windowSize*len(data))
+	if peak>len(data)//2:
+		maxPoint = min(peak+npoints//2,len(data))
+		minPoint = maxPoint-npoints
+	else:
+		minPoint = max(0,peak-npoints//2)
+		maxPoint = peak + npoints -minPoint
+	return data[minPoint:maxPoint]
+		
 def plot(figsize=(12,12)):
 	'''
 	========================================================================
