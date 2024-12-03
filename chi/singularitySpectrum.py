@@ -90,7 +90,7 @@ def selectScales(timeSeries,threshold=1e-3,nscales=30):
 	maxPSD = np.max(psd)
 	psd = psd/maxPSD
 	scales = 1/np.abs(freq[(psd >threshold)])
-	scales = scales.astype(np.int)
+	scales = scales.astype(int)
 	scales = np.unique(scales)
 	scales = np.sort(scales)
 	return np.random.choice(scales,nscales)
