@@ -2,7 +2,7 @@ from MFDFA import singspect
 from MFDFA import  MFDFA
 import numpy as np
 #import numba
-from numba import jit, prange
+#from numba import jit, prange
 from scipy.optimize import curve_fit
 import pandas as pd
 
@@ -143,7 +143,7 @@ def autoMFDFA(timeSeries,qs=np.arange(5,15,2), scThresh=1e-2, nqs = 10, nsamples
 	 
 	for i in range(nsamples):
 		scales = selectScales(data,threshold=scThresh,nscales=nscales)
-		for it  in prange(len(qs)):
+		for it  in range(len(qs)):
 			qrange = qs[it]
 			q = np.linspace(-qrange,qrange,nqs)
 			q = q[q != 0.0]
